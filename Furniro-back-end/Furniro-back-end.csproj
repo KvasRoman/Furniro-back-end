@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="assets\images\" />
-    <Folder Include="Repositories\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

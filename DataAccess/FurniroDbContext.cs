@@ -12,9 +12,9 @@ namespace Furniro.DataAccess
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            IConfigurationBuilder builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", false, true);
+            IConfigurationBuilder builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
             IConfiguration config = builder.Build();
-            optionsBuilder.UseSqlServer(config["AppSettings:ConnectionString"]);
+            optionsBuilder.UseSqlServer(config["ConnectionStrings:DefaultConnection"]);
         }
 
     }
