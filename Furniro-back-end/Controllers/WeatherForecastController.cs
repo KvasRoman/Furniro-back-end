@@ -1,3 +1,4 @@
+using Furniro.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Furniro_back_end.Controllers
@@ -12,15 +13,17 @@ namespace Furniro_back_end.Controllers
     };
 
         private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        private readonly FurniroDbContext _furniroDbContext;
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, FurniroDbContext furniroDbContext)
         {
+            _furniroDbContext = furniroDbContext;
             _logger = logger;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
+            _furniroDbContext.SaveChanges();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),

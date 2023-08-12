@@ -23,4 +23,9 @@
     <Folder Include="Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLogic\Furniro.BusinessLogic.csproj" />
+    <ProjectReference Include="..\DataAccess\Furniro.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
