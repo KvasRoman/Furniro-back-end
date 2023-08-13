@@ -8,6 +8,7 @@ namespace Furniro.DataAccess
 
     public class FurniroDbContext : DbContext
     {
+        DbSet<SupportRequest> SupportRequests { get; set; }
         DbSet<Country> Countries { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -15,6 +15,7 @@ namespace Furniro_back_end.Repositories
         public void Add(T entity)
         {
             _dbContext.Set<T>().Add(entity);
+            _dbContext.SaveChanges();
         }
 
         public void Delete(T entity)
