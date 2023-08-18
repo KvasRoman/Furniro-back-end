@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Furniro.DataAccess.Models
+namespace Furniro.DataAccess.Models.DataAccess
 {
     public class Country
     {

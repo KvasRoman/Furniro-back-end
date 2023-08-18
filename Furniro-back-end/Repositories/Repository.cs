@@ -5,7 +5,7 @@ namespace Furniro_back_end.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly FurniroDbContext _dbContext;
+        protected readonly FurniroDbContext _dbContext;
 
         public Repository(FurniroDbContext dbContext)
         {
@@ -25,7 +25,7 @@ namespace Furniro_back_end.Repositories
 
         public IEnumerable<T> GetAll()
         {
-            return _dbContext.Set<T>().ToList();
+            return _dbContext.Set<T>();
         }
 
         public T GetById(int id)

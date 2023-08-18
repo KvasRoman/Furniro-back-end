@@ -1,4 +1,4 @@
-﻿using Furniro.DataAccess.Models;
+﻿using Furniro.DataAccess.Models.DataAccess;
 using Furniro_back_end.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

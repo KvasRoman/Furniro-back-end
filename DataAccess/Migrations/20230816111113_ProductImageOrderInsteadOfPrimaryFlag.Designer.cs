@@ -4,6 +4,7 @@ using Furniro.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Furniro.DataAccess.Migrations
 {
     [DbContext(typeof(FurniroDbContext))]
-    partial class FurniroDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230816111113_ProductImageOrderInsteadOfPrimaryFlag")]
+    partial class ProductImageOrderInsteadOfPrimaryFlag
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,10 +98,11 @@ namespace Furniro.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("OrderNumber")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsPrimary")
+                        .HasColumnType("bit");
 
                     b.Property<Guid?>("ProductId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Url")
@@ -141,12 +145,13 @@ namespace Furniro.DataAccess.Migrations
 
             modelBuilder.Entity("Furniro.DataAccess.Models.ProductImage", b =>
                 {
-                    b.HasOne("Furniro.DataAccess.Models.Product", "ProductRef")
+                    b.HasOne("Furniro.DataAccess.Models.Product", "Product")
                         .WithMany("ProductImages")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Navigation("ProductRef");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Furniro.DataAccess.Models.Product", b =>

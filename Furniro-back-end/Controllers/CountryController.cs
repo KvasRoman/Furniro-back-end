@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics.Metrics;
-using Furniro.DataAccess.Models;
+using Furniro.DataAccess.Models.DataAccess;
+
 namespace Furniro_back_end.Controllers
 {
     [Route("api/[controller]")]

@@ -13,7 +13,11 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddDbContext<FurniroDbContext>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddSwaggerGen();
+builder.Services.AddScoped(typeof(ProductImageRepository));
+builder.Services.AddSwaggerGen(options =>
+{
+    options.CustomSchemaIds(type => type.ToString());
+});
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
