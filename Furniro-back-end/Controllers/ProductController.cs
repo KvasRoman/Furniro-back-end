@@ -18,12 +18,14 @@ namespace Furniro_back_end.Controllers
             _productImageRep = productImageRep;
         }
         [HttpGet]
-        public IEnumerable<Product> Get()
+        public Product Get(Guid Id)
         {
-            return _repository.GetAll();
+            return (from pc in _repository.GetAll().Where(p => p.Id == Id)
+                    select pc).First();
         }
         [HttpPost]
-        public IActionResult Post(api.Product product) {
+        public IActionResult Post(api.Product product)
+        {
             var newProduct = new Product(product);
             _repository.Add(newProduct);
             _productImageRep.BindToProduct(
