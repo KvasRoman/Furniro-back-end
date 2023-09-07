@@ -23,7 +23,7 @@ namespace Furniro_back_end.Repositories
                     {
                         Id = pc.Id,
                         Name = pc.Name,
-                        BriefDescription = pc.BriefDescription,
+                        ShortDescription = pc.ShortDescription,
                         Price = pc.Price,
                         IsNew = pc.IsNew,
                         DiscountPercentage = pc.DiscountPercentage,
@@ -43,7 +43,7 @@ namespace Furniro_back_end.Repositories
                        {
                            Id = pc.Id,
                            Name = pc.Name,
-                           BriefDescription = pc.BriefDescription,
+                           ShortDescription = pc.ShortDescription,
                            Price = pc.Price,
                            IsNew = pc.IsNew,
                            DiscountPercentage = pc.DiscountPercentage,
@@ -53,7 +53,8 @@ namespace Furniro_back_end.Repositories
                     );
             switch (filter.OrderBy)
             {
-
+                case "NameAsc": res = res.OrderBy(e => e.Name); break;
+                case "NameDesc": res = res.OrderBy(e => e.Name); break;
                 case "PriceAsc": res = res.OrderBy(e => e.Price); break;
                 case "PriceDesc": res = res.OrderByDescending(e => e.Price); break;
                 default: break;
@@ -62,7 +63,7 @@ namespace Furniro_back_end.Repositories
 
             return res
                 .Skip(filter.PageSize * filter.Page)
-                .Take(filter.PageSize); ;
+                .Take(filter.PageSize);
         }
     }
 }

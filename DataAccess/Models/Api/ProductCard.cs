@@ -10,7 +10,7 @@ namespace Furniro.DataAccess.Models.Api
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string BriefDescription { get; set; }
+        public string ShortDescription { get; set; }
         public decimal Price { get; set; }
         public bool IsNew { get; set; }
         public int DiscountPercentage { get; set; }

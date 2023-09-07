@@ -11,7 +11,7 @@ namespace Furniro.DataAccess.Models.Api
         public string Category { get; set; }
         public string Name { get; set; }
         public string BriefDescription { get; set; }
-        public string ShortDesctiption { get; set; }
+        public string ShortDescription { get; set; }
         public string Description { get; set; }
         public decimal Rating { get; set; }
         public decimal Price { get; set; }

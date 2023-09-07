@@ -13,6 +13,7 @@ namespace Furniro.DataAccess
         DbSet<Product> Products { get; set; }
         DbSet<SupportRequest> SupportRequests { get; set; }
         DbSet<Country> Countries { get; set; }
+        DbSet<EmailSubscriber> EmailSubscribers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

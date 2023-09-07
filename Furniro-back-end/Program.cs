@@ -1,4 +1,5 @@
 using Furniro.DataAccess;
+using Furniro.DataAccess.Models.DataAccess;
 using Furniro_back_end.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -14,11 +15,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddDbContext<FurniroDbContext>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped(typeof(ProductImageRepository));
+builder.Services.AddScoped(typeof(IRepository<Product>),typeof(ProductRepository));
 builder.Services.AddScoped(typeof(ProductCardRepository));
 builder.Services.AddSwaggerGen(options =>
 {
     options.CustomSchemaIds(type => type.ToString());
 });
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,

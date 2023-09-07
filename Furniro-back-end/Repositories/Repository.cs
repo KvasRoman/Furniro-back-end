@@ -12,28 +12,33 @@ namespace Furniro_back_end.Repositories
             _dbContext = dbContext;
         }
 
-        public void Add(T entity)
+        virtual public void Add(T entity)
         {
             _dbContext.Set<T>().Add(entity);
             _dbContext.SaveChanges();
         }
 
-        public void Delete(T entity)
+        virtual public void Delete(T entity)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> GetAll()
+        virtual public IEnumerable<T> GetAll()
         {
             return _dbContext.Set<T>();
         }
 
-        public T GetById(int id)
+        virtual public IEnumerable<T> GetAllBy(Predicate<T> predicate)
         {
-            throw new NotImplementedException();
+            return _dbContext.Set<T>().Where(e =>  predicate(e));
         }
 
-        public void Update(T entity)
+        virtual public T GetById(Guid id)
+        {
+            return null;
+        }
+
+        virtual public void Update(T entity)
         {
             throw new NotImplementedException();
         }

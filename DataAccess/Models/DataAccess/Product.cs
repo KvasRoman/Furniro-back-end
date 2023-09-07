@@ -18,7 +18,7 @@ namespace Furniro.DataAccess.Models.DataAccess
             this.Category = product.Category;
             this.Name = product.Name;
             this.BriefDescription = product.BriefDescription;
-            this.ShortDesctiption = product.ShortDesctiption;
+            this.ShortDescription = product.ShortDescription;
             this.Description = product.Description;
             this.Rating = product.Rating;
             this.Price = product.Price;
@@ -31,7 +31,7 @@ namespace Furniro.DataAccess.Models.DataAccess
         public string Category { get; set; }
         public string Name { get; set; }
         public string BriefDescription { get; set; }
-        public string ShortDesctiption { get; set; }
+        public string ShortDescription { get; set; }
         public string Description { get; set; }
         public decimal Rating { get; set; }
         public decimal Price { get; set; }
