@@ -20,8 +20,7 @@ namespace Furniro_back_end.Controllers
         [HttpGet]
         public Product Get(Guid Id)
         {
-            return (from pc in _repository.GetAll().Where(p => p.Id == Id)
-                    select pc).First();
+            return _repository.GetById(Id);
         }
         [HttpPost]
         public IActionResult Post(api.Product product)
