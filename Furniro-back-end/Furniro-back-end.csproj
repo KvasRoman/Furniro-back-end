@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <Folder Include="assets\images\" />
+    <Folder Include="ConfigModels\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

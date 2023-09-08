@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Furniro.BusinessLogic
+namespace Furniro.BusinessLogic.Email
 {
     public interface IEmailSender
     {
-        public bool SendEmail();
+        void SendEmail(Message message);
     }
 }

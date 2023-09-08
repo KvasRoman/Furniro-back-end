@@ -1,3 +1,4 @@
+using Furniro.BusinessLogic.Email;
 using Furniro.DataAccess;
 using Furniro.DataAccess.Models.DataAccess;
 using Furniro_back_end.Repositories;
@@ -8,8 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 // Add services to the container.
 
+var emailCofig = builder.Configuration.GetSection("EmailConfiguration")
+    .Get<EmailConfiguration>();
+builder.Services.AddSingleton(emailCofig);
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddDbContext<FurniroDbContext>();
