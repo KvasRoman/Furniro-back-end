@@ -18,19 +18,20 @@ namespace Furniro_back_end.Controllers
             _productImageRep = productImageRep;
         }
         [HttpGet]
-        public Product Get(Guid Id)
+        public async Task<Product> Get(Guid Id)
         {
-            return _repository.GetById(Id);
+
+            return await _repository.GetByIdAsync(Id);
         }
         [HttpPost]
-        public IActionResult Post(api.Product product)
+        public async Task<IActionResult> Post(api.Product product)
         {
             var newProduct = new Product(product);
-            _repository.Add(newProduct);
-            _productImageRep.BindToProduct(
-                _productImageRep.GetAll().Where(pi => product.Images.Contains(pi.Id)),
+            await _repository.AddAsync(newProduct);
+            await _productImageRep.BindToProductAsync(
+                await _productImageRep.GetAllByAsync(pi => product.Images.Contains(pi.Id)),
                 newProduct
-                );
+            );
             return Ok();
         }
     }

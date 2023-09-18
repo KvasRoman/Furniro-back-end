@@ -2,6 +2,7 @@
 using api = Furniro.DataAccess.Models.Api;
 using Furniro.DataAccess.Models.DataAccess;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Furniro_back_end.Repositories
 {
@@ -12,9 +13,9 @@ namespace Furniro_back_end.Repositories
         {
             _dbcontext = dbContext;
         }
-        public IEnumerable<api.ProductCard> GetAll()
+        public async Task<IEnumerable<api.ProductCard>> GetAllAsync()
         {
-            return (from pc in _dbcontext.Set<Product>()
+            return await (from pc in _dbcontext.Set<Product>()
                     from pi in _dbcontext.Set<ProductImage>()
                     .Where(p => p.ProductId == pc.Id)
                     .OrderBy(p => p.OrderNumber)
@@ -30,9 +31,9 @@ namespace Furniro_back_end.Repositories
                         DiscountedPrice = pc.DiscountedPrice,
                         ImageUrl = pi.Url
                     }
-                    );
+                    ).ToListAsync();
         }
-        public IEnumerable<api.ProductCard> GetByFilter(api.ProductFilter filter)
+        public async Task<IEnumerable<api.ProductCard>> GetByFilterAsync(api.ProductFilter filter)
         {
             var res = (from pc in _dbcontext.Set<Product>()
                        from pi in _dbcontext.Set<ProductImage>()
@@ -61,9 +62,9 @@ namespace Furniro_back_end.Repositories
             }
 
 
-            return res
+            return await res
                 .Skip(filter.PageSize * filter.Page)
-                .Take(filter.PageSize);
+                .Take(filter.PageSize).ToListAsync();
         }
     }
 }

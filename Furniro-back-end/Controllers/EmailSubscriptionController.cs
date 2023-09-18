@@ -15,9 +15,9 @@ namespace Furniro_back_end.Controllers
             _emailSender = emailSender;
         }
         [HttpPost]
-        public IActionResult Subscirbe(string Email,string type = "Default")
+        public async Task<IActionResult> Subscirbe(string Email,string type = "Default")
         {
-            _emailSender.SendEmail(new Message(new string[] { Email }, "Subscription", "You have been subscirbed"));
+            await _emailSender.SendEmailAsync(new Message(new string[] { Email }, "Subscription", "You have been subscirbed"));
             return Ok();
         }
     }

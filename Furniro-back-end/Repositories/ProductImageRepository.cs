@@ -12,13 +12,14 @@ namespace Furniro_back_end.Repositories
         {
         }
 
-        public void BindToProduct(IEnumerable<ProductImage> productImages, Product product)
+        public async Task BindToProductAsync(IEnumerable<ProductImage> productImages, Product product)
         {
+            
             foreach (var image in productImages)
             {
                 image.ProductId = product.Id;
             }
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

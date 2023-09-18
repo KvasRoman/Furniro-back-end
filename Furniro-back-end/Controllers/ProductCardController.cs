@@ -14,13 +14,13 @@ namespace Furniro_back_end.Controllers
             _repository = repository;
         }
         [HttpGet]
-        public IEnumerable<api.ProductCard> Get([FromQuery]api.ProductFilter filter)
+        public async Task<IEnumerable<api.ProductCard>> Get([FromQuery]api.ProductFilter filter)
         {
             if(filter == null)
-                return _repository.GetAll();
+                return await _repository.GetAllAsync();
             else
             {
-                return _repository.GetByFilter(filter);
+                return await _repository.GetByFilterAsync(filter);
             }
         }
     }

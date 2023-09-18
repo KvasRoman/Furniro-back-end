@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Furniro.DataAccess.Models.DataAccess.Properties;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,7 @@ namespace Furniro.DataAccess.Models.DataAccess
         public decimal DiscountedPrice { get; set; }
         public string SKU { get; set; }
         public virtual ICollection<ProductImage> ProductImages { get; set; }
+        public virtual SeatProperties SeatProperties { get; set; }
 
     }
 }

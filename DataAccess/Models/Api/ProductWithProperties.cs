@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Furniro.BusinessLogic.Email
+namespace Furniro.DataAccess.Models.Api
 {
-    public interface IEmailSender
+    internal class ProductWithProperties
     {
-        Task SendEmailAsync(Message message);
     }
 }

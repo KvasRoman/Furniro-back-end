@@ -23,7 +23,7 @@ namespace Furniro_back_end.Controllers
                 request.Id = Guid.NewGuid();
                 _repository.Add(request);
             }
-            catch (Exception ex)
+            catch
             {
                 return StatusCode(500);
             }
