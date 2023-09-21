@@ -21,5 +21,7 @@ namespace Furniro.DataAccess.Models.Api
         public string SKU { get; set; }
 
         public Guid[] Images { get; set; }
+
+        
     }
 }

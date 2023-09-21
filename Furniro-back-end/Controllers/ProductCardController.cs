@@ -1,4 +1,5 @@
-﻿using Furniro.DataAccess.Models.Api.Response;
+﻿using Furniro.BusinessLogic.DefaultIfEmpty;
+using Furniro.DataAccess.Models.Api.Response;
 using Furniro_back_end.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,19 +11,23 @@ namespace Furniro_back_end.Controllers
     public class ProductCardController : ControllerBase
     {
         private ProductCardRepository _repository;
-        public ProductCardController(ProductCardRepository repository)
+        private DefaultImagesConfiguration _defaultImageConfig;
+        public ProductCardController(ProductCardRepository repository, DefaultImagesConfiguration defaultImageConfig)
         {
             _repository = repository;
+            _defaultImageConfig = defaultImageConfig;
         }
         [HttpGet]
         public async Task<ProductCards> Get([FromQuery]api.ProductFilter filter)
         {
-            if(filter == null)
-                return new ProductCards { Cards = await _repository.GetByFilterAsync(filter), Total = 0 };
-            else
+
+            var cards = await _repository.GetByFilterAsync(filter);
+            foreach (var card in cards)
             {
-                return new ProductCards { Cards = await _repository.GetByFilterAsync(filter), Total = await _repository.FilterCount(filter)};
+                if(card.ImageUrl == null)
+                    card.ImageUrl = _defaultImageConfig.ProductImage;
             }
+            return new ProductCards { Cards = cards, Total = await _repository.FilterCount(filter)};
         }
     }
 }

@@ -1,11 +1,14 @@
 ﻿using Furniro.DataAccess.Models.DataAccess.Properties;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 using api = Furniro.DataAccess.Models.Api;
 namespace Furniro.DataAccess.Models.DataAccess
 {
@@ -44,4 +47,33 @@ namespace Furniro.DataAccess.Models.DataAccess
         public virtual SeatProperties SeatProperties { get; set; }
 
     }
+    public static class ProductExtansion { 
+        public static Product Clone(this Product product)
+        {
+                return new Product
+                {
+                    Id = product.Id,
+                    Category = product.Category,
+                    Name = product.Name,
+                    BriefDescription = product.BriefDescription,
+                    ShortDescription = product.ShortDescription,
+                    Description = product.Description,
+                    Rating = product.Rating,
+                    Price = product.Price,
+                    IsNew = product.IsNew,
+                    DiscountPercentage = product.DiscountPercentage,
+                    DiscountedPrice = product.DiscountedPrice,
+                    SKU = product.SKU,
+                    ProductImages = product.ProductImages
+                };
+            }
+        public static Product Clone(this Product product, Func<Product, Product> alter)
+        {
+            var res = alter(product.Clone());
+            return res;
+        }
+    }
+    
+
 }
+

@@ -10,11 +10,9 @@ namespace Furniro_back_end.Repositories
     public class ProductCardRepository
     {
         private FurniroDbContext _dbcontext;
-        private DefaultImagesConfiguration _defaultImageConfig;
-        public ProductCardRepository(FurniroDbContext dbContext, DefaultImagesConfiguration defaultImageConfig)
+        public ProductCardRepository(FurniroDbContext dbContext)
         {
             _dbcontext = dbContext;
-            _defaultImageConfig = defaultImageConfig;
         }
         public async Task<IEnumerable<api.ProductCard>> GetAllAsync()
         {
@@ -48,7 +46,7 @@ namespace Furniro_back_end.Repositories
                            IsNew = pc.IsNew,
                            DiscountPercentage = pc.DiscountPercentage,
                            DiscountedPrice = pc.DiscountedPrice,
-                           ImageUrl = pc.ProductImages.First().Url != null ? pc.ProductImages.First().Url : _defaultImageConfig.ProductImage
+                           ImageUrl = pc.ProductImages.First().Url
                        }
                     );
             switch (filter.OrderBy)
@@ -68,18 +66,7 @@ namespace Furniro_back_end.Repositories
         public async Task<int> FilterCount(api.ProductFilter filter)
         {
             var res = (from pc in _dbcontext.Set<Product>().Include(p => p.ProductImages)
-                       select new api.ProductCard()
-                       {
-                           Id = pc.Id,
-                           Name = pc.Name,
-                           ShortDescription = pc.ShortDescription,
-                           Price = pc.Price,
-                           IsNew = pc.IsNew,
-                           DiscountPercentage = pc.DiscountPercentage,
-                           DiscountedPrice = pc.DiscountedPrice,
-                           ImageUrl = pc.ProductImages.First().Url != null ? pc.ProductImages.First().Url : _defaultImageConfig.ProductImage
-                       }
-                    );
+                       select pc);
             switch (filter.OrderBy)
             {
                 case "NameAsc": res = res.OrderBy(e => e.Name); break;

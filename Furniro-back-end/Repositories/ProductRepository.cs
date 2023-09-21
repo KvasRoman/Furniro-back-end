@@ -9,10 +9,10 @@ namespace Furniro_back_end.Repositories
 {
     public class ProductRepository : Repository<Product>, IRepository<Product>
     {
-        DefaultImagesConfiguration _defaultImages;
-        public ProductRepository(FurniroDbContext dbContext, DefaultImagesConfiguration defaultImages) : base(dbContext)
+        DefaultImagesConfiguration _defaultImageConfiguration;
+        public ProductRepository(FurniroDbContext dbContext, DefaultImagesConfiguration defaultImageConfiguration) : base(dbContext)
         {
-            _defaultImages = defaultImages;
+            _defaultImageConfiguration = defaultImageConfiguration;
         }
         public void Add(api.Product product)
         {
