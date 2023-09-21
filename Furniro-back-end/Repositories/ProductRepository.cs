@@ -1,14 +1,18 @@
-﻿using Furniro.BusinessLogic.Extansions;
+﻿using Furniro.BusinessLogic.DefaultIfEmpty;
+using Furniro.BusinessLogic.Extansions;
 using Furniro.DataAccess;
 using Furniro.DataAccess.Models.DataAccess;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using api = Furniro.DataAccess.Models.Api;
 namespace Furniro_back_end.Repositories
 {
     public class ProductRepository : Repository<Product>, IRepository<Product>
     {
-        public ProductRepository(FurniroDbContext dbContext) : base(dbContext)
+        DefaultImagesConfiguration _defaultImages;
+        public ProductRepository(FurniroDbContext dbContext, DefaultImagesConfiguration defaultImages) : base(dbContext)
         {
+            _defaultImages = defaultImages;
         }
         public void Add(api.Product product)
         {
@@ -18,12 +22,12 @@ namespace Furniro_back_end.Repositories
         public override Product GetById(Guid id)
         {
             return (from pc in _dbContext.Set<Product>().Include(p => p.ProductImages).Where(p => p.Id == id)
-             select pc).First();
+                    select pc).First();
         }
         public override async Task<Product> GetByIdAsync(Guid id)
         {
-            return await (from pc in _dbContext.Set<Product>().Include(p => p.ProductImages).Where(p => p.Id == id)
-                    select pc).FirstAsync();
+            return await _dbContext.Set<Product>().Include(p => p.ProductImages).Where(p => p.Id == id)
+                .FirstAsync();
         }
         public override async void AddAsync(Product entity)
         {
@@ -39,6 +43,7 @@ namespace Furniro_back_end.Repositories
             }
             return null;
         }
+        
         public async Task<IEnumerable<Product>> GetWithPropertiesAsync(Guid[] ids, string propertiesType)
         {
             var products = _dbContext.Set<Product>().Include(p => p.ProductImages);
@@ -49,5 +54,6 @@ namespace Furniro_back_end.Repositories
             }
             return null;
         }
+
     }
 }

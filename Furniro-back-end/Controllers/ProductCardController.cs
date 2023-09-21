@@ -1,4 +1,5 @@
-﻿using Furniro_back_end.Repositories;
+﻿using Furniro.DataAccess.Models.Api.Response;
+using Furniro_back_end.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using api = Furniro.DataAccess.Models.Api;
@@ -14,13 +15,13 @@ namespace Furniro_back_end.Controllers
             _repository = repository;
         }
         [HttpGet]
-        public async Task<IEnumerable<api.ProductCard>> Get([FromQuery]api.ProductFilter filter)
+        public async Task<ProductCards> Get([FromQuery]api.ProductFilter filter)
         {
             if(filter == null)
-                return await _repository.GetAllAsync();
+                return new ProductCards { Cards = await _repository.GetByFilterAsync(filter), Total = 0 };
             else
             {
-                return await _repository.GetByFilterAsync(filter);
+                return new ProductCards { Cards = await _repository.GetByFilterAsync(filter), Total = await _repository.FilterCount(filter)};
             }
         }
     }

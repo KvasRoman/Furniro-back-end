@@ -1,3 +1,4 @@
+using Furniro.BusinessLogic.DefaultIfEmpty;
 using Furniro.BusinessLogic.Email;
 using Furniro.DataAccess;
 using Furniro.DataAccess.Models.DataAccess;
@@ -6,27 +7,35 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+#region Config
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-// Add services to the container.
-
-var emailCofig = builder.Configuration.GetSection("EmailConfiguration")
+var emailConfig = builder.Configuration.GetSection("EmailConfiguration")
     .Get<EmailConfiguration>();
-builder.Services.AddSingleton(emailCofig);
+var imageConfig = builder.Configuration.GetSection("DefaultImages")
+    .Get<DefaultImagesConfiguration>();
+builder.Services.AddSingleton(emailConfig);
+builder.Services.AddSingleton(imageConfig);
+#endregion
+#region CustomServices
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+#endregion
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-
+#region DbContext
 builder.Services.AddDbContext<FurniroDbContext>();
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+#endregion
+#region Repos
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped(typeof(ProductImageRepository));
 builder.Services.AddScoped(typeof(IRepository<Product>),typeof(ProductRepository));
 builder.Services.AddScoped(typeof(ProductCardRepository));
+#endregion
 builder.Services.AddSwaggerGen(options =>
 {
     options.CustomSchemaIds(type => type.ToString());
 });
-builder.Services.AddControllers().AddNewtonsoftJson(options =>
-    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
